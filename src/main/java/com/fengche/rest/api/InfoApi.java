@@ -27,7 +27,7 @@ public class InfoApi {
 
         map.put("info","公开api");
 
-        response.getOutputStream().write(gson.toJson(map).getBytes());
+        response.getOutputStream().write(gson.toJson(map).getBytes("utf-8"));
     }
 
     @RequestMapping("/rest/info")

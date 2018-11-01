@@ -44,6 +44,7 @@ public class AuthApi {
         //不允许为空
         if (loginname == null || password == null) {
             Result.genErrResult("请填写完整的登录信息",response);
+            return;
         }
 
         User user = sysAdminDao.getInfoByName(loginname);
