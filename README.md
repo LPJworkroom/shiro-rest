@@ -12,4 +12,14 @@ spring mvc + shiro + jwt 实现rest api
 (1)
 
 
+(三)技术栈
+
+(1)spring spring mvc
+
+(2)shiro
+
+(3)jwt生成token
+
+(4)DruidDataSource连接池
+
 
