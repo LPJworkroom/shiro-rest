@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean class="com.fengche.rest.shiro.RestRealm" id="restRealm"></bean>
+
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager" ></bean>
+
+    <bean class="org.apache.shiro.web.mgt.DefaultWebSecurityManager" id="securityManager">
+        <property name="realm" ref="restRealm"></property>
+         <property name="sessionManager" ref="sessionManager"></property>
+    </bean>
+
+    <!-- For simplest integration, so that all SecurityUtils.* methods work in all cases, -->
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod" value="org.apache.shiro.SecurityUtils.setSecurityManager"></property>
+        <property name="arguments" ref="securityManager"></property>
+    </bean>
+
+    <bean class="com.fengche.rest.shiro.RestFilter" id="restFilter"></bean>
+
+    <bean class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" id="shiroFilter">
+        <property name="securityManager" ref="securityManager"></property>
+        <property name="filters">
+            <util:map>
+                <entry key="rest" value-ref="restFilter"></entry>
+            </util:map>
+        </property>
+        <!-- 设置路径拦截 -->
+        <property name="filterChainDefinitions">
+            <value>
+                /rest/** = rest
+            </value>
+        </property>
+    </bean>
+
+
+</beans>
